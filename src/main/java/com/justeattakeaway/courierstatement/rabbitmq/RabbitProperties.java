@@ -1,4 +1,4 @@
-package com.justeattakeaway.courierstatement.queue;
+package com.justeattakeaway.courierstatement.rabbitmq;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

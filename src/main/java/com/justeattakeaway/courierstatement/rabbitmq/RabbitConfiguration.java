@@ -1,4 +1,4 @@
-package com.justeattakeaway.courierstatement.queue;
+package com.justeattakeaway.courierstatement.rabbitmq;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

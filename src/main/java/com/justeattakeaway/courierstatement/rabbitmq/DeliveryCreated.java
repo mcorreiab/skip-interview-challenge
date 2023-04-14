@@ -1,4 +1,4 @@
-package com.justeattakeaway.courierstatement.queue;
+package com.justeattakeaway.courierstatement.rabbitmq;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
