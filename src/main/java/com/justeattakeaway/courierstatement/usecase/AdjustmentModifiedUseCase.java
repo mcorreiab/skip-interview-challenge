@@ -1,6 +1,6 @@
 package com.justeattakeaway.courierstatement.usecase;
 
-import com.justeattakeaway.courierstatement.adapter.SaveDeliveryAdapter;
+import com.justeattakeaway.courierstatement.adapter.DeliveryAdapter;
 import com.justeattakeaway.courierstatement.usecase.model.Correction;
 import com.justeattakeaway.courierstatement.usecase.model.CorrectionTypes;
 import com.justeattakeaway.courierstatement.usecase.model.Delivery;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdjustmentModifiedUseCase {
-  private final SaveDeliveryAdapter saveDeliveryAdapter;
+  private final DeliveryAdapter deliveryAdapter;
 
-  public AdjustmentModifiedUseCase(SaveDeliveryAdapter saveDeliveryAdapter) {
-    this.saveDeliveryAdapter = saveDeliveryAdapter;
+  public AdjustmentModifiedUseCase(DeliveryAdapter deliveryAdapter) {
+    this.deliveryAdapter = deliveryAdapter;
   }
 
   private static Optional<Correction> checkIfAdjustmentAlreadyExists(String adjustmentId,
@@ -34,9 +34,9 @@ public class AdjustmentModifiedUseCase {
   }
 
   public void saveAdjustment(Correction correction) {
-    saveDeliveryAdapter.findById(correction.deliveryId()).ifPresentOrElse(
+    deliveryAdapter.findById(correction.deliveryId()).ifPresentOrElse(
         deliveryOnDb -> updateDelivery(correction, deliveryOnDb),
-        () -> saveDeliveryAdapter.save(new Delivery(correction.deliveryId(), List.of(correction)))
+        () -> deliveryAdapter.save(new Delivery(correction.deliveryId(), List.of(correction)))
     );
   }
 
@@ -51,6 +51,6 @@ public class AdjustmentModifiedUseCase {
             .orElse(new ArrayList<>(deliveryOnDb.corrections()));
     corrections.add(correction);
 
-    saveDeliveryAdapter.save(new Delivery(deliveryOnDb, corrections));
+    deliveryAdapter.save(new Delivery(deliveryOnDb, corrections));
   }
 }

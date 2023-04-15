@@ -3,7 +3,7 @@ package com.justeattakeaway.courierstatement.usecase;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.justeattakeaway.courierstatement.adapter.SaveDeliveryAdapter;
+import com.justeattakeaway.courierstatement.adapter.DeliveryAdapter;
 import com.justeattakeaway.courierstatement.usecase.model.CorrectionFactory;
 import com.justeattakeaway.courierstatement.usecase.model.Delivery;
 import com.justeattakeaway.courierstatement.usecase.model.DeliveryFactory;
@@ -22,19 +22,19 @@ public class SaveDeliveryUseCaseTest {
   private SaveDeliveryUseCase target;
 
   @Mock
-  private SaveDeliveryAdapter saveDeliveryAdapter;
+  private DeliveryAdapter deliveryAdapter;
 
   @Test
   public void ifCantFindDeliveryInDatabaseCreateANewOne() {
     // given
     final var delivery = DeliveryFactory.createDelivery();
-    when(saveDeliveryAdapter.findById(delivery.deliveryId())).thenReturn(Optional.empty());
+    when(deliveryAdapter.findById(delivery.deliveryId())).thenReturn(Optional.empty());
 
     // when
     target.saveDelivery(delivery);
 
     // then
-    verify(saveDeliveryAdapter).save(delivery);
+    verify(deliveryAdapter).save(delivery);
   }
 
   @Test
@@ -44,7 +44,7 @@ public class SaveDeliveryUseCaseTest {
     final var adjustment = CorrectionFactory.createAdjustment();
 
     final var deliveryOnDb = new Delivery(delivery.deliveryId(), List.of(adjustment));
-    when(saveDeliveryAdapter.findById(delivery.deliveryId())).thenReturn(Optional.of(deliveryOnDb));
+    when(deliveryAdapter.findById(delivery.deliveryId())).thenReturn(Optional.of(deliveryOnDb));
 
     // when
     target.saveDelivery(delivery);
@@ -58,6 +58,6 @@ public class SaveDeliveryUseCaseTest {
             delivery.value(),
             deliveryOnDb.corrections()
         );
-    verify(saveDeliveryAdapter).save(expectedDelivery);
+    verify(deliveryAdapter).save(expectedDelivery);
   }
 }

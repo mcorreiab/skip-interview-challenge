@@ -1,6 +1,6 @@
 package com.justeattakeaway.courierstatement.database;
 
-import com.justeattakeaway.courierstatement.adapter.SaveDeliveryAdapter;
+import com.justeattakeaway.courierstatement.adapter.DeliveryAdapter;
 import com.justeattakeaway.courierstatement.database.model.CorrectionDb;
 import com.justeattakeaway.courierstatement.database.model.DeliveryDb;
 import com.justeattakeaway.courierstatement.usecase.model.Correction;
@@ -9,10 +9,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SaveDeliveryAdapterImpl implements SaveDeliveryAdapter {
+public class DeliveryAdapterImpl implements DeliveryAdapter {
   private final DeliveryRepository deliveryRepository;
 
-  public SaveDeliveryAdapterImpl(DeliveryRepository deliveryRepository) {
+  public DeliveryAdapterImpl(DeliveryRepository deliveryRepository) {
     this.deliveryRepository = deliveryRepository;
   }
 
