@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class CorrectionModifiedUseCaseTest {
 
   @InjectMocks
-  private AdjustmentModifiedUseCase target;
+  private CorrectionModifiedUseCase target;
 
   @Mock
   private DeliveryAdapter deliveryAdapter;
@@ -34,7 +34,7 @@ public class CorrectionModifiedUseCaseTest {
     when(deliveryAdapter.findById(adjustment.delivery().deliveryId())).thenReturn(Optional.empty());
 
     // when
-    Assertions.assertThatThrownBy(() -> target.saveAdjustment(adjustment))
+    Assertions.assertThatThrownBy(() -> target.saveCorrection(adjustment))
         .isInstanceOf(IllegalArgumentException.class);
   }
 
@@ -47,7 +47,7 @@ public class CorrectionModifiedUseCaseTest {
         .thenReturn(Optional.of(deliveryOnDb));
 
     // when
-    target.saveAdjustment(adjustment);
+    target.saveCorrection(adjustment);
 
     // then
     verify(correctionAdapter).save(adjustment.withDelivery(deliveryOnDb));

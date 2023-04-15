@@ -3,7 +3,7 @@ package com.justeattakeaway.courierstatement.rabbitmq;
 import com.justeattakeaway.courierstatement.rabbitmq.model.AdjustmentModified;
 import com.justeattakeaway.courierstatement.rabbitmq.model.BonusModified;
 import com.justeattakeaway.courierstatement.rabbitmq.model.DeliveryCreated;
-import com.justeattakeaway.courierstatement.usecase.AdjustmentModifiedUseCase;
+import com.justeattakeaway.courierstatement.usecase.CorrectionModifiedUseCase;
 import com.justeattakeaway.courierstatement.usecase.SaveDeliveryUseCase;
 import com.justeattakeaway.courierstatement.usecase.model.Correction;
 import com.justeattakeaway.courierstatement.usecase.model.CorrectionTypes;
@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 public class Listener {
 
   private final SaveDeliveryUseCase saveDeliveryUseCase;
-  private final AdjustmentModifiedUseCase adjustmentModifiedUseCase;
+  private final CorrectionModifiedUseCase correctionModifiedUseCase;
 
-  public Listener(SaveDeliveryUseCase saveDeliveryUseCase, AdjustmentModifiedUseCase adjustmentModifiedUseCase) {
+  public Listener(SaveDeliveryUseCase saveDeliveryUseCase, CorrectionModifiedUseCase correctionModifiedUseCase) {
     this.saveDeliveryUseCase = saveDeliveryUseCase;
-    this.adjustmentModifiedUseCase = adjustmentModifiedUseCase;
+    this.correctionModifiedUseCase = correctionModifiedUseCase;
   }
 
   @RabbitListener(queues = "${rabbitmq.queues.deliveryCreated}")
@@ -36,23 +36,23 @@ public class Listener {
 
   @RabbitListener(queues = "${rabbitmq.queues.adjustmentModified}")
   public void processAdjustmentModified(@Valid @Payload AdjustmentModified adjustmentModified) {
-    final var adjustment = new Correction(
+    final var correction = new Correction(
         adjustmentModified.adjustmentId(),
         new Delivery(adjustmentModified.deliveryId()),
         CorrectionTypes.ADJUSTMENT,
         adjustmentModified.modifiedTimestamp(),
         adjustmentModified.value());
-    adjustmentModifiedUseCase.saveAdjustment(adjustment);
+    correctionModifiedUseCase.saveCorrection(correction);
   }
 
   @RabbitListener(queues = "${rabbitmq.queues.bonusModified}")
   public void processBonusModified(@Valid @Payload BonusModified bonusModified) {
-    final var adjustment = new Correction(
+    final var correction = new Correction(
         bonusModified.bonusId(),
         new Delivery(bonusModified.deliveryId()),
         CorrectionTypes.BONUS,
         bonusModified.modifiedTimestamp(),
         bonusModified.value());
-    adjustmentModifiedUseCase.saveAdjustment(adjustment);
+    correctionModifiedUseCase.saveCorrection(correction);
   }
 }
