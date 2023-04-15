@@ -37,8 +37,8 @@ public class Listener {
   @RabbitListener(queues = "${rabbitmq.queues.adjustmentModified}")
   public void processAdjustmentModified(@Valid @Payload AdjustmentModified adjustmentModified) {
     final var adjustment = new Correction(
-        adjustmentModified.deliveryId(),
         adjustmentModified.adjustmentId(),
+        new Delivery(adjustmentModified.deliveryId()),
         CorrectionTypes.ADJUSTMENT,
         adjustmentModified.modifiedTimestamp(),
         adjustmentModified.value());
@@ -48,8 +48,8 @@ public class Listener {
   @RabbitListener(queues = "${rabbitmq.queues.bonusModified}")
   public void processBonusModified(@Valid @Payload BonusModified bonusModified) {
     final var adjustment = new Correction(
-        bonusModified.deliveryId(),
         bonusModified.bonusId(),
+        new Delivery(bonusModified.deliveryId()),
         CorrectionTypes.BONUS,
         bonusModified.modifiedTimestamp(),
         bonusModified.value());

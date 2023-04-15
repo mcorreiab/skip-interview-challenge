@@ -3,16 +3,12 @@ package com.justeattakeaway.courierstatement.usecase;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.justeattakeaway.courierstatement.adapter.CorrectionAdapter;
 import com.justeattakeaway.courierstatement.adapter.DeliveryAdapter;
 import com.justeattakeaway.courierstatement.usecase.model.CorrectionFactory;
-import com.justeattakeaway.courierstatement.usecase.model.Correction;
-import com.justeattakeaway.courierstatement.usecase.model.CorrectionTypes;
-import com.justeattakeaway.courierstatement.usecase.model.Delivery;
 import com.justeattakeaway.courierstatement.usecase.model.DeliveryFactory;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,73 +24,32 @@ public class CorrectionModifiedUseCaseTest {
   @Mock
   private DeliveryAdapter deliveryAdapter;
 
+  @Mock
+  private CorrectionAdapter correctionAdapter;
+
   @Test
-  public void ifCantFindDeliveryInDatabaseCreateANewOneWithAdjustment() {
+  public void ifCantFindDeliveryInDatabaseReturnAnError() {
     // given
     final var adjustment = CorrectionFactory.createAdjustment();
-    when(deliveryAdapter.findById(adjustment.deliveryId())).thenReturn(Optional.empty());
+    when(deliveryAdapter.findById(adjustment.delivery().deliveryId())).thenReturn(Optional.empty());
 
     // when
-    target.saveAdjustment(adjustment);
-
-    // then
-    final var expectedDelivery = new Delivery(adjustment.deliveryId(), List.of(adjustment));
-    verify(deliveryAdapter).save(expectedDelivery);
+    Assertions.assertThatThrownBy(() -> target.saveAdjustment(adjustment))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
-  public void ifFindDeliveryInDatabaseWithoutAdjustmentAddToList() {
+  public void ifFindDeliveryInDatabaseLinkToCorrection() {
     // given
     final var adjustment = CorrectionFactory.createAdjustment();
     final var deliveryOnDb = DeliveryFactory.createDelivery();
-    when(deliveryAdapter.findById(adjustment.deliveryId())).thenReturn(
-        Optional.of(deliveryOnDb));
+    when(deliveryAdapter.findById(adjustment.delivery().deliveryId()))
+        .thenReturn(Optional.of(deliveryOnDb));
 
     // when
     target.saveAdjustment(adjustment);
 
     // then
-    final var expectedDelivery = new Delivery(deliveryOnDb, List.of(adjustment));
-    verify(deliveryAdapter).save(expectedDelivery);
-  }
-
-  @Test
-  public void ifFindDeliveryInDatabaseWithOtherTypeOfCorrectionAddToList() {
-    // given
-    final var adjustment = CorrectionFactory.createAdjustment();
-    final var deliveryOnDb = DeliveryFactory.createDelivery();
-    final var bonus = CorrectionFactory.createBonus();
-    deliveryOnDb.corrections().add(bonus);
-    when(deliveryAdapter.findById(adjustment.deliveryId())).thenReturn(
-        Optional.of(deliveryOnDb));
-
-    // when
-    target.saveAdjustment(adjustment);
-
-    // then
-    final var expectedDelivery = new Delivery(deliveryOnDb, List.of(bonus, adjustment));
-    verify(deliveryAdapter).save(expectedDelivery);
-  }
-
-  @Test
-  public void ifFindDeliveryInDatabaseWithAdjustmentOverride() {
-    // given
-    final var adjustment = CorrectionFactory.createAdjustment();
-
-    final var deliveryOnDb = DeliveryFactory.createDelivery();
-    final var adjustmentOnDb =
-        new Correction(adjustment.deliveryId(), adjustment.id(), CorrectionTypes.ADJUSTMENT,
-            LocalDateTime.of(2018, 7, 5, 10, 0), BigDecimal.valueOf(8));
-    deliveryOnDb.corrections().add(adjustmentOnDb);
-
-    when(deliveryAdapter.findById(adjustment.deliveryId())).thenReturn(Optional.of(deliveryOnDb));
-
-    // when
-    target.saveAdjustment(adjustment);
-
-    // then
-    deliveryOnDb.corrections().remove(adjustmentOnDb);
-    deliveryOnDb.corrections().add(adjustment);
-    verify(deliveryAdapter).save(deliveryOnDb);
+    verify(correctionAdapter).save(adjustment.withDelivery(deliveryOnDb));
   }
 }

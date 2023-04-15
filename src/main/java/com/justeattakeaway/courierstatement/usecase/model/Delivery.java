@@ -1,27 +1,15 @@
 package com.justeattakeaway.courierstatement.usecase.model;
 
+import com.justeattakeaway.courierstatement.database.model.CorrectionDb;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public record Delivery(
     String deliveryId,
     String courierId,
     LocalDateTime createdTimestamp,
-    BigDecimal value,
-    List<Correction> corrections) {
-  public Delivery(String deliveryId, String courierId, LocalDateTime createdTimestamp,
-                  BigDecimal value) {
-    this(deliveryId, courierId, createdTimestamp, value, new ArrayList<>());
-  }
-
-  public Delivery(String deliveryId, List<Correction> corrections) {
-    this(deliveryId, null, null, null, corrections);
-  }
-
-  public Delivery(Delivery delivery, List<Correction> corrections) {
-    this(delivery.deliveryId, delivery.courierId, delivery.createdTimestamp, delivery.value,
-        corrections);
+    BigDecimal value) {
+  public Delivery(String deliveryId) {
+    this(deliveryId, null, null, null);
   }
 }

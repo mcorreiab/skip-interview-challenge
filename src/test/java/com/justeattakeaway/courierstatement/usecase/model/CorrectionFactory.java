@@ -8,7 +8,7 @@ public class CorrectionFactory {
   public static Correction createAdjustment() {
     return new Correction(
         "deliveryId",
-        "correctionId",
+        DeliveryFactory.createDelivery(),
         CorrectionTypes.ADJUSTMENT,
         LocalDateTime.now(),
         BigDecimal.valueOf(5)
@@ -18,7 +18,7 @@ public class CorrectionFactory {
   public static Correction createBonus() {
     return new Correction(
         "deliveryId",
-        "correctionId",
+        DeliveryFactory.createDelivery(),
         CorrectionTypes.BONUS,
         LocalDateTime.now(),
         BigDecimal.valueOf(12)

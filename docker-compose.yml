@@ -11,8 +11,12 @@ services:
     volumes:
       - ./rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
       - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
-  mongodb:
-    image: mongo:4.4.1
-    container_name: mongodb
+  db:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: courier-statement
     ports:
-      - "27017:27017"
+      - "5432:5432"

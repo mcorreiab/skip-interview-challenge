@@ -13,14 +13,6 @@ public class SaveDeliveryUseCase {
   }
 
   public void saveDelivery(Delivery delivery) {
-    deliveryAdapter.findById(delivery.deliveryId()).ifPresentOrElse(
-        deliveryOnDb -> updateDelivery(delivery, deliveryOnDb),
-        () -> deliveryAdapter.save(delivery)
-    );
-  }
-
-  private void updateDelivery(Delivery delivery, Delivery deliveryOnDb) {
-    final var deliveryToSave = new Delivery(delivery, deliveryOnDb.corrections());
-    deliveryAdapter.save(deliveryToSave);
+    deliveryAdapter.save(delivery);
   }
 }
