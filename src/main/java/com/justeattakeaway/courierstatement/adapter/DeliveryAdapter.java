@@ -14,4 +14,5 @@ public interface DeliveryAdapter {
 
   Page<Delivery> findAllByCourierIdAndPeriod(String courierId, LocalDate from, LocalDate to,
                                                     Pageable pageable);
+  List<Delivery> findAllByCourierIdAndPeriod(String courierId, LocalDate from, LocalDate to);
 }
