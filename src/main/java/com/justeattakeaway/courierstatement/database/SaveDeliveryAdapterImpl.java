@@ -30,4 +30,21 @@ public class SaveDeliveryAdapterImpl implements SaveDeliveryAdapter {
         );
     deliveryRepository.save(deliveryEntity);
   }
+
+  @Override
+  public Optional<Delivery> findById(String deliveryId) {
+    return deliveryRepository.findById(deliveryId)
+        .map(delivery -> new Delivery(
+            delivery.deliveryId(),
+            delivery.courierId(),
+            delivery.createdTimestamp(),
+            delivery.value(),
+            delivery.adjustments().stream().map(adjustment -> new Adjustment(
+                delivery.deliveryId(),
+                adjustment.adjustmentId(),
+                adjustment.modifiedTimestamp(),
+                adjustment.value()
+            )).toList()
+        ));
+  }
 }
