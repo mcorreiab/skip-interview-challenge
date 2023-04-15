@@ -40,7 +40,16 @@
   "policies": [],
   "queues": [
     {
-        "name": "deliveryCreated",
+      "name": "deliveryCreated",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "adjustmentModified",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -50,6 +59,15 @@
     }
   ],
   "exchanges": [
+    {
+      "name": "adjustmentModified",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
     {
       "name": "deliveryCreated",
       "vhost": "/",
@@ -61,6 +79,14 @@
     }
   ],
   "bindings": [
+    {
+      "source": "adjustmentModified",
+      "vhost": "/",
+      "destination": "adjustmentModified",
+      "destination_type": "queue",
+      "routing_key": "adjustmentModified",
+      "arguments": {}
+    },
     {
       "source": "deliveryCreated",
       "vhost": "/",

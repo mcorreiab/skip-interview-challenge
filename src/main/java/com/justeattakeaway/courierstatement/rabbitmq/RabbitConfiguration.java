@@ -26,19 +26,35 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
   }
 
   @Bean
-  public Queue queue() {
+  public Queue deliveryCreatedQueue() {
     return new Queue(rabbitProperties.queues().deliveryCreated());
   }
 
   @Bean
-  public TopicExchange exchange() {
+  public TopicExchange deliveryCreatedExchange() {
     return new TopicExchange(rabbitProperties.queues().deliveryCreated());
   }
 
   @Bean
-  public Binding bindingDeliveryCreated(Queue queue, TopicExchange exchange) {
-    return BindingBuilder.bind(queue()).to(exchange())
+  public Binding bindingDeliveryCreated(Queue deliveryCreatedQueue, TopicExchange deliveryCreatedExchange) {
+    return BindingBuilder.bind(deliveryCreatedQueue).to(deliveryCreatedExchange)
         .with(rabbitProperties.queues().deliveryCreated());
+  }
+
+  @Bean
+  public Queue adjustmentModifiedQueue() {
+    return new Queue(rabbitProperties.queues().adjustmentModified());
+  }
+
+  @Bean
+  public TopicExchange adjustmentModifiedExchange() {
+    return new TopicExchange(rabbitProperties.queues().adjustmentModified());
+  }
+
+  @Bean
+  public Binding bindingAdjustmentModified(Queue adjustmentModifiedQueue, TopicExchange adjustmentModifiedExchange) {
+    return BindingBuilder.bind(adjustmentModifiedQueue).to(adjustmentModifiedExchange)
+        .with(rabbitProperties.queues().adjustmentModified());
   }
 
   @Bean
