@@ -6,22 +6,39 @@ import java.time.LocalDateTime;
 public class CorrectionFactory {
 
   public static Correction createAdjustment() {
-    return new Correction(
+    return createAdjustment(
         "deliveryId",
-        DeliveryFactory.createDelivery(),
-        CorrectionTypes.ADJUSTMENT,
-        LocalDateTime.now(),
-        BigDecimal.valueOf(5)
+        5.0,
+        DeliveryFactory.createDelivery()
     );
   }
 
-  public static Correction createBonus() {
+  public static Correction createAdjustment(String id, Double amount, Delivery delivery) {
     return new Correction(
+        id,
+        delivery,
+        CorrectionTypes.ADJUSTMENT,
+        LocalDateTime.now(),
+        BigDecimal.valueOf(amount)
+    );
+  }
+
+
+  public static Correction createBonus() {
+    return createBonus(
         "deliveryId",
-        DeliveryFactory.createDelivery(),
+        12.0,
+        DeliveryFactory.createDelivery()
+    );
+  }
+
+  public static Correction createBonus(String id, Double amount, Delivery delivery) {
+    return new Correction(
+        id,
+        delivery,
         CorrectionTypes.BONUS,
         LocalDateTime.now(),
-        BigDecimal.valueOf(12)
+        BigDecimal.valueOf(amount)
     );
   }
 

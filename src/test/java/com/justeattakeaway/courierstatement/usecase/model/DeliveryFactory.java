@@ -6,6 +6,10 @@ import java.time.LocalDateTime;
 public class DeliveryFactory {
 
   public static Delivery createDelivery() {
-    return new Delivery("deliveryId", "courierId", LocalDateTime.now(), BigDecimal.valueOf(10));
+    return createDelivery("deliveryId", 10.0);
+  }
+
+  public static Delivery createDelivery(String deliveryId, Double amount) {
+    return new Delivery(deliveryId, "courierId", LocalDateTime.now(), BigDecimal.valueOf(amount));
   }
 }
