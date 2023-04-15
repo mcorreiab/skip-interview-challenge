@@ -8,7 +8,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -31,16 +30,12 @@ public class CorrectionDb {
   }
 
   public CorrectionDb(Correction correction) {
+    this.id = correction.id() + "-" + correction.type().name();
     this.correctionId = correction.id();
     this.delivery = new DeliveryDb(correction.delivery());
     this.type = correction.type();
     this.date = correction.modifiedTimestamp();
     this.value = correction.value();
-  }
-
-  @PrePersist
-  private void generateId() {
-    this.id = this.correctionId + "-" + this.type.name();
   }
 
   public String getId() {
@@ -51,12 +46,12 @@ public class CorrectionDb {
     this.id = id;
   }
 
-  public void setCorrectionId(String correctionId) {
-    this.correctionId = correctionId;
-  }
-
   public String getCorrectionId() {
     return correctionId;
+  }
+
+  public void setCorrectionId(String correctionId) {
+    this.correctionId = correctionId;
   }
 
   public DeliveryDb getDelivery() {
