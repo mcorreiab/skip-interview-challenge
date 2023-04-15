@@ -1,7 +1,7 @@
 package com.justeattakeaway.courierstatement.adapter;
 
-import com.justeattakeaway.courierstatement.rabbitmq.DeliveryCreated;
+import com.justeattakeaway.courierstatement.usecase.model.Delivery;
 
 public interface SaveDeliveryAdapter {
-   void save(DeliveryCreated deliveryCreated);
+  void save(Delivery delivery);
 }

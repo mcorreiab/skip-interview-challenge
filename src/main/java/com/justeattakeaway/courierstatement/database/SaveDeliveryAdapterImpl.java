@@ -1,8 +1,11 @@
 package com.justeattakeaway.courierstatement.database;
 
 import com.justeattakeaway.courierstatement.adapter.SaveDeliveryAdapter;
-import com.justeattakeaway.courierstatement.database.model.Delivery;
-import com.justeattakeaway.courierstatement.rabbitmq.DeliveryCreated;
+import com.justeattakeaway.courierstatement.database.model.AdjustmentDb;
+import com.justeattakeaway.courierstatement.database.model.DeliveryDb;
+import com.justeattakeaway.courierstatement.usecase.model.Adjustment;
+import com.justeattakeaway.courierstatement.usecase.model.Delivery;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,12 +16,17 @@ public class SaveDeliveryAdapterImpl implements SaveDeliveryAdapter {
     this.deliveryRepository = deliveryRepository;
   }
 
-  public void save(DeliveryCreated delivery) {
+  public void save(Delivery delivery) {
     var deliveryEntity =
-        new Delivery(delivery.deliveryId(),
+        new DeliveryDb(delivery.deliveryId(),
             delivery.courierId(),
             delivery.createdTimestamp(),
-            delivery.value()
+            delivery.value(),
+            delivery.adjustments().stream().map(adjustment -> new AdjustmentDb(
+                adjustment.adjustmentId(),
+                adjustment.modifiedTimestamp(),
+                adjustment.value()
+            )).toList()
         );
     deliveryRepository.save(deliveryEntity);
   }
