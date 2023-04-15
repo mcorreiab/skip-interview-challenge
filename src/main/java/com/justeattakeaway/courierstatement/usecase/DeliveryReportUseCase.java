@@ -6,7 +6,6 @@ import com.justeattakeaway.courierstatement.usecase.model.Correction;
 import com.justeattakeaway.courierstatement.usecase.model.DeliveryReport;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class DeliveryReportUseCase {
                                                      Pageable pageable) {
     return
         deliveryAdapter.findAllByCourierIdAndPeriod(courierId, from, to, pageable).map(delivery -> {
-          final var correction = correctionAdapter.findByDeliveryId(delivery.deliveryId());
+          final var correction = correctionAdapter.findAllByDeliveryId(delivery.deliveryId());
 
           final var sum = delivery.value()
               .add(correction.stream().map(Correction::value)

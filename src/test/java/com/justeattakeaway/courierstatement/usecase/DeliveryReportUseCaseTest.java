@@ -6,8 +6,6 @@ import com.justeattakeaway.courierstatement.usecase.model.CorrectionFactory;
 import com.justeattakeaway.courierstatement.usecase.model.DeliveryFactory;
 import com.justeattakeaway.courierstatement.usecase.model.DeliveryReport;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Collections;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -17,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
@@ -46,9 +43,9 @@ public class DeliveryReportUseCaseTest {
     Mockito.when(
             deliveryAdapter.findAllByCourierIdAndPeriod(courierId, to, from, Pageable.unpaged()))
         .thenReturn(new PageImpl<>(List.of(delivery, delivery2)));
-    Mockito.when(correctionAdapter.findByDeliveryId(delivery.deliveryId()))
+    Mockito.when(correctionAdapter.findAllByDeliveryId(delivery.deliveryId()))
         .thenReturn(List.of(correction, correction2));
-    Mockito.when(correctionAdapter.findByDeliveryId(delivery2.deliveryId()))
+    Mockito.when(correctionAdapter.findAllByDeliveryId(delivery2.deliveryId()))
         .thenReturn(Collections.emptyList());
 
     // when

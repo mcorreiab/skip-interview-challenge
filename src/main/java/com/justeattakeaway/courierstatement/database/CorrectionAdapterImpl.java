@@ -22,7 +22,7 @@ public class CorrectionAdapterImpl implements CorrectionAdapter {
   }
 
   @Override
-  public List<Correction> findByDeliveryId(String deliveryId) {
+  public List<Correction> findAllByDeliveryId(String deliveryId) {
     return correctionRepository.findAllByDeliveryId(deliveryId)
         .stream().map(correction -> new Correction(
             correction.getCorrectionId(),

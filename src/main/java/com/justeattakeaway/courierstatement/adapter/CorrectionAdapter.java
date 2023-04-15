@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface CorrectionAdapter {
   void save(Correction correction);
-  List<Correction> findByDeliveryId(String deliveryId);
+  List<Correction> findAllByDeliveryId(String deliveryId);
 }
