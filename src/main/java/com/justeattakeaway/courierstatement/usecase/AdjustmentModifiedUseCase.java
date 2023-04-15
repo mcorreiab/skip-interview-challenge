@@ -1,7 +1,8 @@
 package com.justeattakeaway.courierstatement.usecase;
 
 import com.justeattakeaway.courierstatement.adapter.SaveDeliveryAdapter;
-import com.justeattakeaway.courierstatement.usecase.model.Adjustment;
+import com.justeattakeaway.courierstatement.usecase.model.Correction;
+import com.justeattakeaway.courierstatement.usecase.model.CorrectionTypes;
 import com.justeattakeaway.courierstatement.usecase.model.Delivery;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,36 +18,39 @@ public class AdjustmentModifiedUseCase {
     this.saveDeliveryAdapter = saveDeliveryAdapter;
   }
 
-  private static Optional<Adjustment> checkIfAdjustmentAlreadyExists(String adjustmentId,
-                                                                     List<Adjustment> adjustments) {
-    return adjustments.stream().filter(it -> Objects.equals(it.adjustmentId(), adjustmentId))
+  private static Optional<Correction> checkIfAdjustmentAlreadyExists(String adjustmentId,
+                                                                     List<Correction> corrections,
+                                                                     CorrectionTypes type) {
+    return corrections.stream()
+        .filter(it -> Objects.equals(it.id(), adjustmentId) && Objects.equals(it.type(), type))
         .findFirst();
   }
 
-  private static ArrayList<Adjustment> getListWithoutOldAdjustment(List<Adjustment> adjustments,
-                                                                   Adjustment value) {
-    final var existentAdjustments = new ArrayList<>(adjustments);
+  private static ArrayList<Correction> getListWithoutOldAdjustment(List<Correction> corrections,
+                                                                   Correction value) {
+    final var existentAdjustments = new ArrayList<>(corrections);
     existentAdjustments.remove(value);
     return existentAdjustments;
   }
 
-  public void saveAdjustment(Adjustment adjustment) {
-    saveDeliveryAdapter.findById(adjustment.deliveryId()).ifPresentOrElse(
-        deliveryOnDb -> updateDelivery(adjustment, deliveryOnDb),
-        () -> saveDeliveryAdapter.save(new Delivery(adjustment.deliveryId(), List.of(adjustment)))
+  public void saveAdjustment(Correction correction) {
+    saveDeliveryAdapter.findById(correction.deliveryId()).ifPresentOrElse(
+        deliveryOnDb -> updateDelivery(correction, deliveryOnDb),
+        () -> saveDeliveryAdapter.save(new Delivery(correction.deliveryId(), List.of(correction)))
     );
   }
 
-  private void updateDelivery(Adjustment adjustment, Delivery deliveryOnDb) {
+  private void updateDelivery(Correction correction, Delivery deliveryOnDb) {
     final var existentAdjustment =
-        checkIfAdjustmentAlreadyExists(adjustment.adjustmentId(), deliveryOnDb.adjustments());
+        checkIfAdjustmentAlreadyExists(correction.id(), deliveryOnDb.corrections(),
+            correction.type());
 
-    ArrayList<Adjustment> adjustments =
+    ArrayList<Correction> corrections =
         existentAdjustment.map(
-                value -> getListWithoutOldAdjustment(deliveryOnDb.adjustments(), value))
-            .orElse(new ArrayList<>(deliveryOnDb.adjustments()));
-    adjustments.add(adjustment);
+                value -> getListWithoutOldAdjustment(deliveryOnDb.corrections(), value))
+            .orElse(new ArrayList<>(deliveryOnDb.corrections()));
+    corrections.add(correction);
 
-    saveDeliveryAdapter.save(new Delivery(deliveryOnDb, adjustments));
+    saveDeliveryAdapter.save(new Delivery(deliveryOnDb, corrections));
   }
 }

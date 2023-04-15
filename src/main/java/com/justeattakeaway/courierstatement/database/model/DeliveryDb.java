@@ -12,6 +12,6 @@ public record DeliveryDb(
     String courierId,
     LocalDateTime createdTimestamp,
     BigDecimal value,
-    List<AdjustmentDb> adjustments
+    List<CorrectionDb> adjustments
 ) {
 }

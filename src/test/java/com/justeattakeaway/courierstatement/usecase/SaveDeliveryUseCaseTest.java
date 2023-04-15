@@ -4,12 +4,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.justeattakeaway.courierstatement.adapter.SaveDeliveryAdapter;
-import com.justeattakeaway.courierstatement.usecase.model.Adjustment;
-import com.justeattakeaway.courierstatement.usecase.model.AdjustmentFactory;
+import com.justeattakeaway.courierstatement.usecase.model.CorrectionFactory;
 import com.justeattakeaway.courierstatement.usecase.model.Delivery;
 import com.justeattakeaway.courierstatement.usecase.model.DeliveryFactory;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -44,7 +41,7 @@ public class SaveDeliveryUseCaseTest {
   public void ifFindDeliveryInDatabaseOverrideWithOwnInformation() {
     // given
     final var delivery = DeliveryFactory.createDelivery();
-    final var adjustment = AdjustmentFactory.createAdjustment();
+    final var adjustment = CorrectionFactory.createAdjustment();
 
     final var deliveryOnDb = new Delivery(delivery.deliveryId(), List.of(adjustment));
     when(saveDeliveryAdapter.findById(delivery.deliveryId())).thenReturn(Optional.of(deliveryOnDb));
@@ -59,7 +56,7 @@ public class SaveDeliveryUseCaseTest {
             delivery.courierId(),
             delivery.createdTimestamp(),
             delivery.value(),
-            deliveryOnDb.adjustments()
+            deliveryOnDb.corrections()
         );
     verify(saveDeliveryAdapter).save(expectedDelivery);
   }

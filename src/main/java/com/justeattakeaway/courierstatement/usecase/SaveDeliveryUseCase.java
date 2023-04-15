@@ -20,7 +20,7 @@ public class SaveDeliveryUseCase {
   }
 
   private void updateDelivery(Delivery delivery, Delivery deliveryOnDb) {
-    final var deliveryToSave = new Delivery(delivery, deliveryOnDb.adjustments());
+    final var deliveryToSave = new Delivery(delivery, deliveryOnDb.corrections());
     saveDeliveryAdapter.save(deliveryToSave);
   }
 }

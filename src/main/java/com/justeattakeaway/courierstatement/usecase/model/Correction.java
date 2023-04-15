@@ -3,9 +3,10 @@ package com.justeattakeaway.courierstatement.usecase.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record Adjustment(
+public record Correction(
     String deliveryId,
-    String adjustmentId,
+    String id,
+    CorrectionTypes type,
     LocalDateTime modifiedTimestamp,
     BigDecimal value) {
 }

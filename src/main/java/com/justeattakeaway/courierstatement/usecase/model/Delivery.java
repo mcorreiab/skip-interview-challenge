@@ -10,18 +10,18 @@ public record Delivery(
     String courierId,
     LocalDateTime createdTimestamp,
     BigDecimal value,
-    List<Adjustment> adjustments) {
+    List<Correction> corrections) {
   public Delivery(String deliveryId, String courierId, LocalDateTime createdTimestamp,
                   BigDecimal value) {
     this(deliveryId, courierId, createdTimestamp, value, new ArrayList<>());
   }
 
-  public Delivery(String deliveryId, List<Adjustment> adjustments) {
-    this(deliveryId, null, null, null, adjustments);
+  public Delivery(String deliveryId, List<Correction> corrections) {
+    this(deliveryId, null, null, null, corrections);
   }
 
-  public Delivery(Delivery delivery, List<Adjustment> adjustments) {
+  public Delivery(Delivery delivery, List<Correction> corrections) {
     this(delivery.deliveryId, delivery.courierId, delivery.createdTimestamp, delivery.value,
-        adjustments);
+        corrections);
   }
 }
