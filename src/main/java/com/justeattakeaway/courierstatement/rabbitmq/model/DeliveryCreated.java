@@ -1,4 +1,4 @@
-package com.justeattakeaway.courierstatement.rabbitmq;
+package com.justeattakeaway.courierstatement.rabbitmq.model;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

@@ -1,5 +1,6 @@
 package com.justeattakeaway.courierstatement.rabbitmq;
 
+import com.justeattakeaway.courierstatement.rabbitmq.model.DeliveryCreated;
 import com.justeattakeaway.courierstatement.usecase.SaveDeliveryUseCase;
 import jakarta.validation.Valid;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
