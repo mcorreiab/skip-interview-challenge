@@ -13,6 +13,14 @@ public class CorrectionFactory {
     );
   }
 
+  public static Correction createAdjustment(String id, Double amount) {
+    return createAdjustment(
+        id,
+        amount,
+        DeliveryFactory.createDelivery()
+    );
+  }
+
   public static Correction createAdjustment(String id, Double amount, Delivery delivery) {
     return new Correction(
         id,
@@ -23,19 +31,17 @@ public class CorrectionFactory {
     );
   }
 
-
   public static Correction createBonus() {
     return createBonus(
         "deliveryId",
-        12.0,
-        DeliveryFactory.createDelivery()
+        12.0
     );
   }
 
-  public static Correction createBonus(String id, Double amount, Delivery delivery) {
+  public static Correction createBonus(String id, Double amount) {
     return new Correction(
         id,
-        delivery,
+        DeliveryFactory.createDelivery(),
         CorrectionTypes.BONUS,
         LocalDateTime.now(),
         BigDecimal.valueOf(amount)
