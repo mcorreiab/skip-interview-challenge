@@ -69,7 +69,7 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
 
   @Bean
   public Binding bindingBonusModified(Queue bonusModifiedQueue, TopicExchange bonusModifiedExchange) {
-    return BindingBuilder.bind(bonusModifiedExchange).to(bonusModifiedExchange)
+    return BindingBuilder.bind(bonusModifiedQueue).to(bonusModifiedExchange)
         .with(rabbitProperties.queues().bonusModified());
   }
 
