@@ -58,6 +58,22 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
   }
 
   @Bean
+  public Queue bonusModifiedQueue() {
+    return new Queue(rabbitProperties.queues().bonusModified());
+  }
+
+  @Bean
+  public TopicExchange bonusModifiedExchange() {
+    return new TopicExchange(rabbitProperties.queues().bonusModified());
+  }
+
+  @Bean
+  public Binding bindingBonusModified(Queue bonusModifiedQueue, TopicExchange bonusModifiedExchange) {
+    return BindingBuilder.bind(bonusModifiedExchange).to(bonusModifiedExchange)
+        .with(rabbitProperties.queues().bonusModified());
+  }
+
+  @Bean
   public Jackson2JsonMessageConverter converter() {
     return new Jackson2JsonMessageConverter(
         JsonMapper.builder().addModule(new JavaTimeModule()).build());

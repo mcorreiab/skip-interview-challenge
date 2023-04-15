@@ -56,11 +56,29 @@
       "arguments": {
         "x-queue-type": "classic"
       }
+    },
+    {
+      "name": "bonusModified",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
     }
   ],
   "exchanges": [
     {
       "name": "adjustmentModified",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "bonusModified",
       "vhost": "/",
       "type": "topic",
       "durable": true,
@@ -85,6 +103,14 @@
       "destination": "adjustmentModified",
       "destination_type": "queue",
       "routing_key": "adjustmentModified",
+      "arguments": {}
+    },
+    {
+      "source": "bonusModified",
+      "vhost": "/",
+      "destination": "bonusModified",
+      "destination_type": "queue",
+      "routing_key": "bonusModified",
       "arguments": {}
     },
     {
