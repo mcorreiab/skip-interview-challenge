@@ -2,7 +2,20 @@
 [![Spring Boot](https://img.shields.io/badge/spring--boot-3.0.5-green?style=flat-square&logo=spring-boot)](https://spring.io/)
 [![Java](https://img.shields.io/badge/java-17-blue?style=flat-square&logo=oracle)](https://www.java.com/en/)
 
+- [Overview](#overview)
+- [How to run the project](#how-to-run-the-project)
+- [Architecture](#architecture)
+  - [Events](#events)
+  - [Database](#database)
+
 This repository provides an implementation for SkipTheDishes interview challenge. It consists on a service that listen to events related to courier deliveries and exposes endpoints to get condensed data by period and week.
+
+## How to run the project
+The project can be run using Docker Compose. It will start the service, a RabbitMQ instance and a PostgreSQL database. To run the project, execute the following command:
+```bash
+docker-compose up
+```
+The service will be available on port 8080. The RabbitMQ management interface will be available on port 15672. The PostgreSQL database will be available on port 5432.
 
 ## Architecture
 
