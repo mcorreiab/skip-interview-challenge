@@ -1,5 +1,6 @@
 # Skip Interview Challenge
 [![Spring Boot](https://img.shields.io/badge/spring--boot-3.0.5-green?style=flat-square&logo=spring-boot)](https://spring.io/)
+[![Java](https://img.shields.io/badge/java-17-blue?style=flat-square&logo=oracle)](https://www.java.com/en/)
 
 This repository provides an implementation for SkipTheDishes interview challenge. It consists on a service that listen to events related to courier deliveries and exposes endpoints to get condensed data by period and week.
 
