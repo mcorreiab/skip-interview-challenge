@@ -1,6 +1,25 @@
 version: '3.8'
 
 services:
+  application:
+    build: .
+    container_name: courier-statement
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_USER: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_DB: courier-statement
+      SPRING_DATASOURCE_HOST: db
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - db
+      - rabbitmq
   rabbitmq:
     image: rabbitmq:3.8.9-management
     container_name: rabbitmq
@@ -11,12 +30,22 @@ services:
     volumes:
       - ./rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
       - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
   db:
     image: postgres:latest
     container_name: postgres
     environment:
-      POSTGRES_USER: username
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: courier-statement
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
