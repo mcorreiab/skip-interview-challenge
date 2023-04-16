@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import com.justeattakeaway.courierstatement.adapter.CorrectionAdapter;
 import com.justeattakeaway.courierstatement.adapter.DeliveryAdapter;
+import com.justeattakeaway.courierstatement.usecase.exceptions.DeliveryNotFoundException;
 import com.justeattakeaway.courierstatement.usecase.model.CorrectionFactory;
 import com.justeattakeaway.courierstatement.usecase.model.DeliveryFactory;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class CorrectionModifiedUseCaseTest {
 
     // when
     Assertions.assertThatThrownBy(() -> target.saveCorrection(adjustment))
-        .isInstanceOf(IllegalArgumentException.class);
+        .isInstanceOf(DeliveryNotFoundException.class);
   }
 
   @Test
