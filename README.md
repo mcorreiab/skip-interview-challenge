@@ -24,6 +24,9 @@ The project can be run using Docker Compose. It will start the service, a Rabbit
 docker-compose up
 ```
 The service will be available on port 8080. The RabbitMQ management interface will be available on port 15672. The PostgreSQL database will be available on port 5432.
+To access the RabbitMQ management interface, use the following credentials:
+- Username: admin
+- Password: admin
 
 To stop the project, execute the following command:
 ```bash
@@ -36,6 +39,13 @@ The service can also be run locally, but it requires a RabbitMQ instance and a P
 To run the service locally, execute the following command:
 ```bash
 ./mvnw spring-boot:run
+```
+
+## Tests
+The database for the integration tests was created using [TestContainers](https://www.testcontainers.org/). So, to run all the tests, you need to have Docker running.
+The tests can be run using the following command:
+```bash
+./mvnw test
 ```
 
 ## Architecture
