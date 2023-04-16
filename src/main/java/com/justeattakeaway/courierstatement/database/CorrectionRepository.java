@@ -8,5 +8,10 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CorrectionRepository extends CrudRepository<CorrectionDb, String> {
   List<CorrectionDb> findAllByDeliveryId(String deliveryId);
-  List<CorrectionDb> findAllByDateBetweenAndDelivery_CourierId(LocalDateTime fromDate, LocalDateTime toDate, String courierId);
+
+  List<CorrectionDb> findAllByDateBetweenAndDelivery_CourierId(
+      LocalDateTime fromDate,
+      LocalDateTime toDate,
+      String courierId
+  );
 }

@@ -19,7 +19,10 @@ public class Listener {
   private final SaveDeliveryUseCase saveDeliveryUseCase;
   private final CorrectionModifiedUseCase correctionModifiedUseCase;
 
-  public Listener(SaveDeliveryUseCase saveDeliveryUseCase, CorrectionModifiedUseCase correctionModifiedUseCase) {
+  public Listener(
+      SaveDeliveryUseCase saveDeliveryUseCase,
+      CorrectionModifiedUseCase correctionModifiedUseCase
+  ) {
     this.saveDeliveryUseCase = saveDeliveryUseCase;
     this.correctionModifiedUseCase = correctionModifiedUseCase;
   }

@@ -20,7 +20,10 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
 
   private final LocalValidatorFactoryBean validator;
 
-  public RabbitConfiguration(RabbitProperties rabbitProperties, LocalValidatorFactoryBean validator) {
+  public RabbitConfiguration(
+      RabbitProperties rabbitProperties,
+      LocalValidatorFactoryBean validator
+  ) {
     this.rabbitProperties = rabbitProperties;
     this.validator = validator;
   }
@@ -36,7 +39,10 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
   }
 
   @Bean
-  public Binding bindingDeliveryCreated(Queue deliveryCreatedQueue, TopicExchange deliveryCreatedExchange) {
+  public Binding bindingDeliveryCreated(
+      Queue deliveryCreatedQueue,
+      TopicExchange deliveryCreatedExchange
+  ) {
     return BindingBuilder.bind(deliveryCreatedQueue).to(deliveryCreatedExchange)
         .with(rabbitProperties.queues().deliveryCreated());
   }
@@ -52,7 +58,10 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
   }
 
   @Bean
-  public Binding bindingAdjustmentModified(Queue adjustmentModifiedQueue, TopicExchange adjustmentModifiedExchange) {
+  public Binding bindingAdjustmentModified(
+      Queue adjustmentModifiedQueue,
+      TopicExchange adjustmentModifiedExchange
+  ) {
     return BindingBuilder.bind(adjustmentModifiedQueue).to(adjustmentModifiedExchange)
         .with(rabbitProperties.queues().adjustmentModified());
   }

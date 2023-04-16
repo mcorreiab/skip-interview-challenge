@@ -30,7 +30,11 @@ public class CorrectionAdapterImpl implements CorrectionAdapter {
   }
 
   @Override
-  public List<Correction> findAllByCourierIdAndPeriod(String courierId, LocalDate from, LocalDate to) {
+  public List<Correction> findAllByCourierIdAndPeriod(
+      String courierId,
+      LocalDate from,
+      LocalDate to
+  ) {
     return correctionRepository.findAllByDateBetweenAndDelivery_CourierId(from.atStartOfDay(),
             atEndOfDay(to), courierId)
         .stream().map(this::mapDbToEntity).toList();
