@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "corrections")
 public class CorrectionDb {
   @Id
   String id;
