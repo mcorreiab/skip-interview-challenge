@@ -1,6 +1,7 @@
 # Skip Interview Challenge
 [![Spring Boot](https://img.shields.io/badge/spring--boot-3.0.5-green?style=flat-square&logo=spring-boot)](https://spring.io/)
 [![Java](https://img.shields.io/badge/java-17-blue?style=flat-square&logo=oracle)](https://www.java.com/en/)
+![Build and tests](https://github.com/mcorreiab/skip-interview-challenge/actions/workflows/buid-test.yml/badge.svg)
 
 # Table of contents
 - [Overview](#overview)
