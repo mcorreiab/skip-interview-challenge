@@ -101,6 +101,6 @@ It uses all the data that it finds for the week of the reference date, even if t
   "courierId": "Courier linked to the deliveries",
   "weekStart": "Start date of the week",
   "weekEnd": "End date of the week",
-  "amount": 5.50 // Sum of the delivery value and the adjustments and bonuses
+  "totalAmount": 5.50 // Sum of the delivery value and the adjustments and bonuses
 }
 ```
