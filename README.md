@@ -91,6 +91,11 @@ The endpoint searches for all the deliveries in the period and adds the value of
 
 The response returned by the endpoint is paginated, as is expected a huge volume of data for an active courier and its possible to search for a longer period.
 
+The path is `/couriers/{courierId}/report/from/{from}/to/{to}` where:
+- **courierId** is the courier id
+- **from** is the start date of the period in the format `yyyy-MM-dd`
+- **to** is the end date of the period in the format `yyyy-MM-dd`
+
 The content is
 ```json
 [
@@ -98,7 +103,24 @@ The content is
     "deliveryId": "Id of the delivery",
     "courierId": "Courier linked to the delivery",
     "date": "Creation date of the delivery",
-    "amount": 5.50 // Sum of the delivery value and the adjustments and bonuses
+    "totalAmount": 9.00, //Total with adjustments and bonuses
+    "deliveryAmount": 10.00, //Delivery value
+    "transactions": {
+      "adjustments": [
+        {
+          "id": "adjustmentId",
+          "date": "Modification date of the adjustment",
+          "amount": -5.00 //Adjustment value
+        }
+      ],
+      "bonuses": [
+        {
+          "id": "bonusId",
+          "date": "Modification date of the bonus",
+          "amount": 4.00 //Bonus value
+        }
+      ]
+    }
   }
 ]
 ```
@@ -108,6 +130,10 @@ This endpoints receives the date of the week and the courier id. It returns the 
 Since this endpoint is a statement, the date of the adjustments and bonuses is considered. The endpoint searches for all the deliveries in the period and adds the value of all the adjustments and bonuses to the delivery value.
 
 It uses all the data that it finds for the week of the reference date, even if the delivery was created in a previous week. The idea is to provide a statement of the courier for the given week, not only the deliveries that were created in that week.
+
+The path is `couriers/{courierId}/statement/week/{date}` where:
+- **courierId** is the courier id
+- **date** is the reference date of the week in the format `yyyy-MM-dd`
 
 ```json
 {
