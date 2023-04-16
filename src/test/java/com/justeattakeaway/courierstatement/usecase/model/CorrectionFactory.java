@@ -7,7 +7,7 @@ public class CorrectionFactory {
 
   public static Correction createAdjustment() {
     return createAdjustment(
-        "deliveryId",
+        "adjustmentId",
         5.0,
         DeliveryFactory.createDelivery()
     );
@@ -31,17 +31,18 @@ public class CorrectionFactory {
     );
   }
 
-  public static Correction createBonus() {
+  public static Correction createBonus(String id, Double amount) {
     return createBonus(
-        "deliveryId",
-        12.0
+        id,
+        amount,
+        DeliveryFactory.createDelivery()
     );
   }
 
-  public static Correction createBonus(String id, Double amount) {
+  public static Correction createBonus(String id, Double amount, Delivery delivery) {
     return new Correction(
         id,
-        DeliveryFactory.createDelivery(),
+        delivery,
         CorrectionTypes.BONUS,
         LocalDateTime.now(),
         BigDecimal.valueOf(amount)

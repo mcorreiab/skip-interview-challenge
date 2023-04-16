@@ -1,22 +1,49 @@
 {
   "content": [
     {
-      "deliveryId": "outOfWeek",
+      "deliveryId": "deliveryWithCorrection",
       "courierId": "courier",
-      "date": "2023-04-08T23:59:00",
-      "amount": 5.50
+      "date": "2023-04-10T23:59:00",
+      "totalAmount": 9.00,
+      "deliveryAmount": 10.00,
+      "transactions": {
+        "adjustments": [
+          {
+            "id": "validAdjustment",
+            "date": "2023-04-14T19:00:00",
+            "amount": -5.00
+          }
+        ],
+        "bonuses": [
+          {
+            "id": "bonus",
+            "date": "2023-04-12T23:00:00",
+            "amount": 4.00
+          }
+        ]
+      }
     },
     {
       "deliveryId": "justDelivery",
       "courierId": "courier",
       "date": "2023-04-10T22:00:00",
-      "amount": 10.00
+      "totalAmount": 10.00,
+      "deliveryAmount": 10.00,
+      "transactions": {
+        "adjustments": [],
+        "bonuses": []
+      }
     },
     {
-      "deliveryId": "deliveryWithCorrection",
+      "deliveryId": "outOfWeek",
       "courierId": "courier",
-      "date": "2023-04-10T23:59:00",
-      "amount": 9.00
+      "date": "2023-04-08T23:59:00",
+      "totalAmount": 5.50,
+      "deliveryAmount": 5.50,
+      "transactions": {
+        "adjustments": [],
+        "bonuses": []
+      }
     }
   ],
   "pageable": {
@@ -31,9 +58,9 @@
     "paged": true,
     "unpaged": false
   },
+  "last": true,
   "totalPages": 1,
   "totalElements": 3,
-  "last": true,
   "size": 20,
   "number": 0,
   "sort": {
