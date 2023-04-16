@@ -10,6 +10,7 @@
   - [Database](#database)
 - [Business rules decisions](#business-rules-decisions)
   - [Endpoint that return delivery transactions by period and courier](#endpoint-that-return-delivery-transactions-by-period-and-courier)
+  - [Endpoint that returns the weekly statement of a courier](#endpoint-that-returns-the-weekly-statement-of-a-courier)
 
 This repository provides an implementation for SkipTheDishes interview challenge. It consists on a service that listen to events related to courier deliveries and exposes endpoints to get condensed data by period and week.
 
