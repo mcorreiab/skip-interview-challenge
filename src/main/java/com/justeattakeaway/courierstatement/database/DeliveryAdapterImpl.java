@@ -47,7 +47,7 @@ public class DeliveryAdapterImpl implements DeliveryAdapter {
         .toList();
   }
 
-  private static LocalDateTime atEndOfDay(LocalDate date) {
+  private LocalDateTime atEndOfDay(LocalDate date) {
     return date.atTime(23, 59, 59, 999999999);
   }
 

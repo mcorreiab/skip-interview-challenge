@@ -26,17 +26,17 @@ public class CorrectionAdapterImpl implements CorrectionAdapter {
   @Override
   public List<Correction> findAllByDeliveryId(String deliveryId) {
     return correctionRepository.findAllByDeliveryId(deliveryId)
-        .stream().map(CorrectionAdapterImpl::mapDbToEntity).toList();
+        .stream().map(this::mapDbToEntity).toList();
   }
 
   @Override
   public List<Correction> findAllByCourierIdAndPeriod(String courierId, LocalDate from, LocalDate to) {
     return correctionRepository.findAllByDateBetweenAndDelivery_CourierId(from.atStartOfDay(),
             atEndOfDay(to), courierId)
-        .stream().map(CorrectionAdapterImpl::mapDbToEntity).toList();
+        .stream().map(this::mapDbToEntity).toList();
   }
 
-  private static Correction mapDbToEntity(CorrectionDb correction) {
+  private Correction mapDbToEntity(CorrectionDb correction) {
     return new Correction(
         correction.getCorrectionId(),
         new Delivery(correction.getDelivery().getId(), correction.getDelivery().getCourierId(),
@@ -46,7 +46,7 @@ public class CorrectionAdapterImpl implements CorrectionAdapter {
         correction.getValue());
   }
 
-  private static LocalDateTime atEndOfDay(LocalDate date) {
+  private LocalDateTime atEndOfDay(LocalDate date) {
     return date.atTime(23, 59, 59, 999999999);
   }
 }
