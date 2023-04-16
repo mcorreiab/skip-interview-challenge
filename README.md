@@ -7,6 +7,7 @@
 - [How to run the project](#how-to-run-the-project)
   - [Docker](#docker)
   - [Locally](#locally)
+  - [Tests](#tests)
 - [Architecture](#architecture)
   - [Events](#events)
   - [Database](#database)
