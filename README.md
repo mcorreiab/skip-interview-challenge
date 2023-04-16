@@ -5,6 +5,8 @@
 # Table of contents
 - [Overview](#overview)
 - [How to run the project](#how-to-run-the-project)
+  - [Docker](#docker)
+  - [Locally](#locally)
 - [Architecture](#architecture)
   - [Events](#events)
   - [Database](#database)
@@ -15,11 +17,25 @@
 This repository provides an implementation for SkipTheDishes interview challenge. It consists on a service that listen to events related to courier deliveries and exposes endpoints to get condensed data by period and week.
 
 ## How to run the project
+### Docker
 The project can be run using Docker Compose. It will start the service, a RabbitMQ instance and a PostgreSQL database. To run the project, execute the following command:
 ```bash
 docker-compose up
 ```
 The service will be available on port 8080. The RabbitMQ management interface will be available on port 15672. The PostgreSQL database will be available on port 5432.
+
+To stop the project, execute the following command:
+```bash
+docker-compose down
+```
+
+### Locally
+The service can also be run locally, but it requires a RabbitMQ instance and a PostgreSQL database. The connection details can be configured in the `application.properties` file.
+
+To run the service locally, execute the following command:
+```bash
+./mvnw spring-boot:run
+```
 
 ## Architecture
 
