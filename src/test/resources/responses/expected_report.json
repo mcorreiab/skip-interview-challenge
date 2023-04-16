@@ -1,0 +1,47 @@
+{
+  "content": [
+    {
+      "deliveryId": "outOfWeek",
+      "courierId": "courier",
+      "date": "2023-04-08T23:59:00",
+      "amount": 5.50
+    },
+    {
+      "deliveryId": "justDelivery",
+      "courierId": "courier",
+      "date": "2023-04-10T22:00:00",
+      "amount": 10.00
+    },
+    {
+      "deliveryId": "deliveryWithCorrection",
+      "courierId": "courier",
+      "date": "2023-04-10T23:59:00",
+      "amount": 9.00
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalPages": 1,
+  "totalElements": 3,
+  "last": true,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "numberOfElements": 3,
+  "empty": false
+}
