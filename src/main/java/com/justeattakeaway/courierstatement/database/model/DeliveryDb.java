@@ -3,14 +3,10 @@ package com.justeattakeaway.courierstatement.database.model;
 import com.justeattakeaway.courierstatement.usecase.model.Delivery;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-@Entity
+@Entity(name = "deliveries")
 public class DeliveryDb {
   @Id
   String id;
