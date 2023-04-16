@@ -135,6 +135,7 @@ The path is `couriers/{courierId}/statement/week/{date}` where:
 - **courierId** is the courier id
 - **date** is the reference date of the week in the format `yyyy-MM-dd`
 
+And the content is
 ```json
 {
   "courierId": "Courier linked to the deliveries",
